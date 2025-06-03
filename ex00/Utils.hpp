@@ -5,6 +5,8 @@
 # include <climits>
 # include <cfloat>
 # include <cmath>
+# include <cstdlib>
+# include <ctime>
 # include <string>
 
 bool	isFloat(std::string toConvert);

@@ -21,7 +21,8 @@ static bool	isInf(double d)
 
 /*
 The bounds of floats are [-FLT_MAX, FLT_MAX]
-(FLT_MIN = smallest float value > 0)
+Since the input value must be between [0, 1000],
+we can make a valid float value in data between [0, FLT_MAX / 1000.0]
 */
 bool	isFloat(std::string toConvert)
 {

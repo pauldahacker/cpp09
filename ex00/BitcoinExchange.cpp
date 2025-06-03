@@ -107,7 +107,7 @@ void BitcoinExchange::displayLine(const std::string &line) const
 void BitcoinExchange::display() const
 {
 	std::string line;
-	std::ifstream inputFile(_input);
+	std::ifstream inputFile(_input.c_str());
 
 	if (inputFile.is_open())
 	{

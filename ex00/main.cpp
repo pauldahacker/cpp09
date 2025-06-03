@@ -6,9 +6,9 @@ int main(int argc, char *argv[])
 		std::cerr << "Too few or too many arguments" << std::endl;
 	else
 	{
-		BitcoinExchange b(argv[1]);
 		try
 		{
+			BitcoinExchange b(argv[1]);
 			b.display();
 		}
 		catch(const std::exception& e)
