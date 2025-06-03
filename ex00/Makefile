@@ -9,9 +9,9 @@ NAME = btc
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-HEADER = BitcoinExchange.hpp
+HEADER = BitcoinExchange.hpp Data.hpp Utils.hpp
 
-SRC = BitcoinExchange.cpp main.cpp
+SRC = BitcoinExchange.cpp Data.cpp Utils.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

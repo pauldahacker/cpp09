@@ -3,6 +3,7 @@
 
 # include "Data.hpp"
 
+struct Data;
 struct BitcoinExchange
 {
 	public:
@@ -12,8 +13,16 @@ struct BitcoinExchange
 
 		const BitcoinExchange &operator=(const BitcoinExchange &other);
 
+		// exceptions
+		class UnreadableInputException;
+		class BadInputException;
+		class InvalidValueInputException;
+
 		// member functions
-		void loadData();
+		const Data &getData() const;
+		bool isDateValid(const std::string &line) const;
+		void displayLine(const std::string &line) const;
+		void display() const;
 	private:
 		std::string _input;
 		Data		_data;

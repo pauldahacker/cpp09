@@ -1,18 +1,36 @@
 #include "Data.hpp"
 
+class Data::UnreadableDataException : public std::exception
+{
+	public:
+		virtual const char* what() const throw()
+		{
+			return ("Data file cannot be read");
+		}
+};
+class Data::MissingCommaDataException : public std::exception
+{
+	public:
+		virtual const char* what() const throw()
+		{
+			return ("Data file contains a line missing a comma");
+		}
+};
+class Data::InvalidValueDataException : public std::exception
+{
+	public:
+		virtual const char* what() const throw()
+		{
+			return ("Data file contains an invalid value");
+		}
+};
+
 Data::Data()
 {
-	try
-	{
-		loadData();
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
-	}
+	loadData();
 }
 
-Data::Data(const Data &other) : _data(other._data)
+Data::Data(const Data &other) : _content(other._content)
 {}
 
 Data::~Data()
@@ -21,7 +39,8 @@ Data::~Data()
 const Data &Data::operator=(const Data &other)
 {
 	if (this != &other)
-		_data = other._data;
+		_content = other._content;
+	return (*this);
 }
 
 void Data::loadData()
@@ -30,12 +49,42 @@ void Data::loadData()
 	std::ifstream dataFile(DATA_FILE);
 	if (dataFile.is_open())
 	{
+		std::getline(dataFile, line);
 		while (std::getline(dataFile, line))
 		{
-			int pos = line.find(",");
-			_data[line.substr(0, pos)] = std::strtof(line.substr(pos + 1).c_str(), 0);
+			size_t pos = line.find(",");
+			if (pos == line.npos)
+				throw (MissingCommaDataException());
+			if (!isFloat(line.substr(pos + 1)))
+				throw (InvalidValueDataException());
+			_content[line.substr(0, pos)] = convertToFloat(line.substr(pos + 1));
 		}
 	}
 	else
-		throw (std::ios_base::failure("Unable to open data file"));
+		throw (UnreadableDataException());
+}
+
+bool Data::isTooOld(const std::string &date) const
+{
+	return (_content.begin()->first > date);
+}
+
+/*
+this function is nearly perfect for the context of the exercise
+https://en.cppreference.com/w/cpp/container/map/lower_bound.html
+*/
+float Data::findRate(const std::string &date) const
+{
+	std::map<std::string, float>::const_iterator it = _content.lower_bound(date);
+	if (it != _content.end() && it->first == date)
+		return it->second;
+	if (it != _content.begin())
+		--it;
+	return it->second;
+}
+
+void Data::printData() const
+{
+	for (std::map<std::string, float>::const_iterator it = _content.begin(); it != _content.end(); ++it)
+		std::cout << it->first << ", " << it->second << std::endl;
 }
