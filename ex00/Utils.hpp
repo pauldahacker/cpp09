@@ -1,16 +1,17 @@
-#ifndef INCLUDE_HPP
-# define INCLUDE_HPP
+#ifndef UTILS_HPP
+# define UTILS_HPP
 
 # include <iostream>
+# include <fstream>
+# include <string>
+# include <map>
+# include <cstdlib>
 # include <climits>
 # include <cfloat>
-# include <cmath>
-# include <cstdlib>
 # include <ctime>
-# include <string>
 
-bool	isDateValid(const std::string &date);
-bool	isValueValid(const std::string &value);
-float   convertToFloat(const std::string &toConvert);
+bool							isDateValid(const std::string &date);
+bool							isValueValid(const std::string &value);
+float   						convertToFloat(const std::string &toConvert);
 
 #endif

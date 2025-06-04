@@ -1,9 +1,11 @@
 #ifndef BITCOINEXCHANGE_HPP
 # define BITCOINEXCHANGE_HPP
 
-# include "Data.hpp"
+# define DATA_FILE "data.csv"
+# include "Utils.hpp"
 
-struct Data;
+typedef std::map<std::string, float> Data;
+
 struct BitcoinExchange
 {
 	public:
@@ -13,7 +15,6 @@ struct BitcoinExchange
 		class TooOldException;
 		class InvalidValueInputException;
 
-		// member functions
 		static void displayLine(const std::string &line, const Data &data);
 		static void display(const char *input);
 	private:

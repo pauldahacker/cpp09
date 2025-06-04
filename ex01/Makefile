@@ -5,13 +5,13 @@ DEF_COLOR = \033[0;39m
 GREEN =	\033[0;92m
 GRAY = \033[38;5;8m
 
-NAME = btc
+NAME = RPN
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-HEADER = BitcoinExchange.hpp Utils.hpp
+HEADER = RPN.hpp
 
-SRC = BitcoinExchange.cpp Utils.cpp main.cpp
+SRC = RPN.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

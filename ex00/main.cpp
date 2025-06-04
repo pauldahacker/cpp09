@@ -10,10 +10,10 @@ int main(int argc, char *argv[])
 		}
 		catch(const std::exception& e)
 		{
-			std::cerr << e.what() << std::endl;
+			std::cerr << "Error: " << e.what() << std::endl;
 		}
 	}
-	if (argc != 2)
+	else
 		std::cerr << "Too few or too many arguments" << std::endl;
 	return (0);
 }

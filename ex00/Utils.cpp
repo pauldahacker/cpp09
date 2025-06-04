@@ -11,7 +11,7 @@ static bool	isDecimal(const std::string &toConvert)
 }
 
 /*
-
+https://en.cppreference.com/w/cpp/chrono/c/mktime
 */
 bool	isDateValid(const std::string &date)
 {
