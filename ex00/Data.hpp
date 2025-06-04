@@ -19,13 +19,13 @@ struct Data
 		// exceptions
 		class UnreadableDataException;
 		class MissingCommaDataException;
+		class InvalidDateDataException;
 		class InvalidValueDataException;
 
 		// member functions
 		void loadData();
 		bool isTooOld(const std::string &date) const;
 		float findRate(const std::string &date) const;
-		void printData() const;
 	private:
 		std::map<std::string, float> _content;
 };

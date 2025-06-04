@@ -9,8 +9,8 @@
 # include <ctime>
 # include <string>
 
-bool	isFloat(std::string toConvert);
-bool	isInt(std::string toConvert);
-float   convertToFloat(std::string toConvert);
+bool	isDateValid(const std::string &date);
+bool	isValueValid(const std::string &value);
+float   convertToFloat(const std::string &toConvert);
 
 #endif

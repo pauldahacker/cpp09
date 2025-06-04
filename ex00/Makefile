@@ -21,7 +21,7 @@ $(NAME): $(OBJ)
 	@echo "$(BLUE)Flags		$(GRAY)$(FLAGS)$(DEF_COLOR)"
 	@echo "$(GREEN)$(NAME) compiled succesfully!$(DEF_COLOR)"
 
-%.o: %.cpp $(TEMPLATE) Makefile
+%.o: %.cpp $(HEADER) Makefile
 	@echo "$(BROWN)Compiling	$(BLUE)→ $(ORANGE)$<$(DEF_COLOR)"
 	@$(CC) $(FLAGS) -c $< -o $@
 

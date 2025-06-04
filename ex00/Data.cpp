@@ -8,6 +8,7 @@ class Data::UnreadableDataException : public std::exception
 			return ("Data file cannot be read");
 		}
 };
+
 class Data::MissingCommaDataException : public std::exception
 {
 	public:
@@ -16,6 +17,16 @@ class Data::MissingCommaDataException : public std::exception
 			return ("Data file contains a line missing a comma");
 		}
 };
+
+class Data::InvalidDateDataException : public std::exception
+{
+	public:
+		virtual const char* what() const throw()
+		{
+			return ("Data file contains an invalid date");
+		}
+};
+
 class Data::InvalidValueDataException : public std::exception
 {
 	public:
@@ -47,6 +58,7 @@ void Data::loadData()
 {
 	std::string line;
 	std::ifstream dataFile(DATA_FILE);
+
 	if (dataFile.is_open())
 	{
 		std::getline(dataFile, line);
@@ -55,7 +67,9 @@ void Data::loadData()
 			size_t pos = line.find(",");
 			if (pos == line.npos)
 				throw (MissingCommaDataException());
-			if (!isFloat(line.substr(pos + 1)))
+			if (!isDateValid(line.substr(0, pos)))
+				throw (InvalidDateDataException());
+			if (!isValueValid(line.substr(pos + 1)))
 				throw (InvalidValueDataException());
 			_content[line.substr(0, pos)] = convertToFloat(line.substr(pos + 1));
 		}
@@ -70,7 +84,6 @@ bool Data::isTooOld(const std::string &date) const
 }
 
 /*
-this function is nearly perfect for the context of the exercise
 https://en.cppreference.com/w/cpp/container/map/lower_bound.html
 */
 float Data::findRate(const std::string &date) const
@@ -80,11 +93,5 @@ float Data::findRate(const std::string &date) const
 		return it->second;
 	if (it != _content.begin())
 		--it;
-	return it->second;
-}
-
-void Data::printData() const
-{
-	for (std::map<std::string, float>::const_iterator it = _content.begin(); it != _content.end(); ++it)
-		std::cout << it->first << ", " << it->second << std::endl;
+	return (it->second);
 }
