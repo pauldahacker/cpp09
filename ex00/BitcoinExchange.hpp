@@ -15,7 +15,6 @@ struct BitcoinExchange
 		class TooOldException;
 		class InvalidValueInputException;
 
-		static void displayLine(const std::string &line, const Data &data);
 		static void display(const char *input);
 	private:
 		BitcoinExchange();
@@ -23,6 +22,11 @@ struct BitcoinExchange
 		~BitcoinExchange();
 
 		const BitcoinExchange &operator=(const BitcoinExchange &other);
+
+		static Data 		loadData();
+		static bool 		isTooOld(const std::string &date, const Data &data);
+		static const float 	&findRate(const std::string &date, const Data &data);
+		static void 		displayLine(const std::string &line, const Data &data);
 };
 
 #endif

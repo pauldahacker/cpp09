@@ -2,7 +2,9 @@
 
 int main(int argc, char *argv[])
 {
-	if (argc == 2)
+	if (argc != 2)
+		std::cerr << "Error: Too few or too many arguments" << std::endl;
+	else
 	{
 		try
 		{
@@ -13,7 +15,5 @@ int main(int argc, char *argv[])
 			std::cerr << "Error: " << e.what() << std::endl;
 		}
 	}
-	else
-		std::cerr << "Too few or too many arguments" << std::endl;
 	return (0);
 }

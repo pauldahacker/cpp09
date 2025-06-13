@@ -9,9 +9,9 @@ NAME = RPN
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-HEADER = RPN.hpp
+HEADER = Utils.hpp RPN.hpp
 
-SRC = RPN.cpp main.cpp
+SRC = Utils.cpp RPN.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

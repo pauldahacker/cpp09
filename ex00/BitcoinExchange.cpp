@@ -52,14 +52,41 @@ class BitcoinExchange::InvalidValueInputException : public std::exception
 };
 
 /*
+Attempts to display all lines in input.
+if it fails, it throws an appropriate exception.
+*/
+void BitcoinExchange::display(const char *input)
+{
+	Data			data = loadData();
+	std::string 	line;
+	std::ifstream	inputFile(input);
+
+	if (!inputFile.is_open())
+		throw (UnreadableInputException());
+	std::getline(inputFile, line);
+	while (std::getline(inputFile, line))
+	{
+		try
+		{
+			displayLine(line, data);
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << "Error: " << e.what() << std::endl;
+		}
+	}
+	inputFile.close();
+}
+
+/*
 Returns the data from DATA_FILE in std::map<string,float> form.
 if it fails, it throws a std::Exception.
 */
-static Data loadData()
+Data BitcoinExchange::loadData()
 {
-	Data data;
-	std::string line;
-	std::ifstream dataFile(DATA_FILE);
+	Data			data;
+	std::string		line;
+	std::ifstream	dataFile(DATA_FILE);
 
 	if (dataFile.is_open())
 	{
@@ -82,7 +109,7 @@ static Data loadData()
 		throw (std::ios_base::failure("Data file cannot be read."));
 }
 
-static bool isTooOld(const std::string &date, const Data &data)
+bool BitcoinExchange::isTooOld(const std::string &date, const Data &data)
 {
 	return (data.begin()->first > date);
 }
@@ -90,7 +117,7 @@ static bool isTooOld(const std::string &date, const Data &data)
 /*
 https://en.cppreference.com/w/cpp/container/map/lower_bound.html
 */
-static float findRate(const std::string &date, const Data &data)
+const float &BitcoinExchange::findRate(const std::string &date, const Data &data)
 {
 	Data::const_iterator it = data.lower_bound(date);
 	if (it != data.end() && it->first == date)
@@ -129,32 +156,6 @@ void BitcoinExchange::displayLine(const std::string &line, const Data &data)
 	std::cout << date << " => " << findRate(date, data) * inputVal << std::endl;
 }
 
-/*
-Attempts to display all lines in input.
-if it fails, it throws an appropriate exception.
-*/
-void BitcoinExchange::display(const char *input)
-{
-	Data			data = loadData();
-	std::string 	line;
-	std::ifstream	inputFile(input);
-
-	if (!inputFile.is_open())
-		throw (UnreadableInputException());
-	std::getline(inputFile, line);
-	while (std::getline(inputFile, line))
-	{
-		try
-		{
-			displayLine(line, data);
-		}
-		catch(const std::exception& e)
-		{
-			std::cerr << "Error: " << e.what() << std::endl;
-		}
-	}
-	inputFile.close();
-}
 
 BitcoinExchange::BitcoinExchange()
 {}
