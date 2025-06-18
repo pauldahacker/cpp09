@@ -28,13 +28,12 @@ void    RPN::calculate(const std::string &expression)
 
     while (s >> elem)
     {
-        std::cout << "elem: " << elem << std::endl;
         if (!isInt(elem) && !isOperation(elem))
             throw (std::runtime_error("Invalid expression."));
         if (isInt(elem))
             stack.push(std::atoi(elem.c_str()));
-        else if (stack.empty())
-            throw (std::runtime_error("Missing operand."));
+        else if (stack.size() < 2)
+            throw (std::runtime_error("Missing operand(s)."));
         else
             applyOperation(elem, stack);
     }

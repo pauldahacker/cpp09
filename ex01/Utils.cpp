@@ -6,21 +6,34 @@ bool    isOperation(const std::string &elem)
         || elem == "*" || elem == "/");
 }
 
+/*
+https://cplusplus.com/reference/istream/istream/operator%3E%3E/
+uses string stream to detect if the string is a valid int.
+s >> number attemps to store the string as an int.
+s >> rest checks if there is something after the number.
+*/
 bool	isInt(const std::string &elem)
 {
     if (elem.empty())
         return (false);
-    char last = elem[elem.size() - 1];
-    if (!std::isdigit(last))
+    std::stringstream   s(elem);
+    int number;
+    s >> number;
+    if (s.fail())
         return (false);
-    long number = std::atol(elem.c_str());
-	return (number <= INT_MAX && number >= INT_MIN);
+    char rest;
+    s >> rest;
+    return (s.fail());
 }
 
+/*
+applies op to the 2 top elements of the stack (assumes size > 1).
+1) copy top of the stack in a tmp value ("popped"),
+2) pop the stack,
+3) apply op to new top of the stack using the popped value.
+*/
 void     applyOperation(const std::string &op, std::stack<int> &stack)
 {
-    if (stack.size() <= 1)
-        return ;
     int popped = stack.top();
     stack.pop();
     long long result = stack.top();

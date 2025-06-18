@@ -1,7 +1,6 @@
 #ifndef RPN_HPP
 # define RPN_HPP
 
-# include <sstream>
 # include "Utils.hpp"
 
 class RPN
