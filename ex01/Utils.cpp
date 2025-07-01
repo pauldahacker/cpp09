@@ -6,24 +6,13 @@ bool    isOperation(const std::string &elem)
         || elem == "*" || elem == "/");
 }
 
-/*
-https://cplusplus.com/reference/istream/istream/operator%3E%3E/
-uses string stream to detect if the string is a valid int.
-s >> number attemps to store the string as an int.
-s >> rest checks if there is something after the number.
-*/
-bool	isInt(const std::string &elem)
+bool    isInt(const std::string &elem)
 {
-    if (elem.empty())
+    char *rest = 0;
+    long val = std::strtol(elem.c_str(), &rest, 10);
+    if (val < INT_MIN || val > INT_MAX || *rest != '\0')
         return (false);
-    std::stringstream   s(elem);
-    int number;
-    s >> number;
-    if (s.fail())
-        return (false);
-    char rest;
-    s >> rest;
-    return (s.fail());
+    return (true);
 }
 
 /*

@@ -12,7 +12,7 @@ class RPN
         RPN(const RPN &other);
         ~RPN();
 
-        const RPN &operator=(const RPN &other);
+        RPN &operator=(const RPN &other);
 };
 
 #endif

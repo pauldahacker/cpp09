@@ -21,7 +21,7 @@ struct BitcoinExchange
 		BitcoinExchange(const BitcoinExchange &other);
 		~BitcoinExchange();
 
-		const BitcoinExchange &operator=(const BitcoinExchange &other);
+		BitcoinExchange &operator=(const BitcoinExchange &other);
 
 		static Data 		loadData();
 		static bool 		isTooOld(const std::string &date, const Data &data);

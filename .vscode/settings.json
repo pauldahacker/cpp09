@@ -76,6 +76,7 @@
 		"cfloat": "cpp",
 		"__string": "cpp",
 		"filesystem": "cpp",
-		"sstream": "cpp"
+		"sstream": "cpp",
+		"complex": "cpp"
 	}
 }

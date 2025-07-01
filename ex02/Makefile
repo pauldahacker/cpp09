@@ -9,9 +9,9 @@ NAME = PmergeMe
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 
-HEADER = PmergeMe.hpp
+HEADER = Utils.hpp PmergeMe.hpp
 
-SRC = PmergeMe.cpp main.cpp
+SRC = Utils.cpp PmergeMe.cpp main.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)

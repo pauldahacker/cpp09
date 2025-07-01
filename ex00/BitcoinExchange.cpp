@@ -168,7 +168,7 @@ BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
 BitcoinExchange::~BitcoinExchange()
 {}
 
-const BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other)
 {
 	(void)other;
 	return (*this);
