@@ -1,7 +1,8 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
-# include "Utils.hpp"
+# include "mergeInsert.tpp"
+# include <algorithm>
 # include <ctime>
 # include <deque>
 # include <vector>
@@ -19,8 +20,6 @@ class PmergeMe
     private:
         std::vector<int>    vec;
         std::deque<int>     deq;
-        bool                hasLeftover;
-        int                 leftover;
     
         void parseInput(const int n, char *input[]);
 };

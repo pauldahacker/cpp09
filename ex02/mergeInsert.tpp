@@ -1,8 +1,9 @@
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef MERGEINSERT_TPP
+# define MERGEINSERT_TPP
 
 # include <iostream>
-# include <sstream>
+# include <climits>
+# include <cstdlib>
 # include <fstream>
 # include <string>
 
@@ -14,13 +15,11 @@ https://oeis.org/A001045
 But the algorithm inserts the first number (b1) in the main chain
 and requires more than 1 element in the container, so we define it as
 */
-# define JACOBSTHAL_LENGTH 31
+# define JACOBSTHAL_LENGTH 32
 static const int JACOBSTHAL_SEQUENCE[] = {
-    1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845,
+    0, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923, 21845,
     43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405, 11184811,
     22369621, 44739243, 89478485, 178956971, 357913941, 715827883, 1431655765};
-
-bool    isPositiveInt(const std::string &elem);
 
 
 template <typename T>
@@ -70,15 +69,15 @@ static void binaryInsert(T &mainChain, T &toInsert)
 template <typename T>
 void mergeInsert(T &intContainer)
 {
-    typename    T::iterator first   = intContainer.begin();
-    typename    T::iterator last    = intContainer.end();
+    if (intContainer.size() <= 1)
+        return ;
+
+    typename    T::iterator it   = intContainer.begin();
     T a, b, mainChain;
 
     // split in pairs A and B
-    for (typename T::iterator it = first; it != last; it += 2)
+    while (std::distance(it, intContainer.end()) >= 2)
     {
-        if ((it + 1) == last)
-            break ;
         if (*it > *(it + 1))
         {
             a.push_back(*it);
@@ -89,20 +88,20 @@ void mergeInsert(T &intContainer)
             a.push_back(*(it + 1));
             b.push_back(*it);
         }
+        it += 2;
     }
+    int hasRest = intContainer.size() % 2;
+    int rest = hasRest ? intContainer.back() : 0;
     // recursion on A
-    if (!a.empty())
-    {
-        mainChain.push_back(b[0]);
-        mergeInsert(a);
-        mainChain.insert(mainChain.end(), a.begin(), a.end());
-    }
+    // mainChain.push_back(b[0]);
+    mergeInsert(a);
+    mainChain.insert(mainChain.end(), a.begin(), a.end());
     // binary insertion from B to main chain
-    if (b.size() > 1)
+    if (b.size() >= 1)
         binaryInsert(mainChain, b);
     // insert leftover if n is odd
-    if (intContainer.size() % 2)
-        binaryInsertInt(mainChain, *(last - 1));
+    if (hasRest)
+        binaryInsertInt(mainChain, rest);
     intContainer = mainChain;
 }
 

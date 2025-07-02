@@ -5,7 +5,7 @@ PmergeMe::PmergeMe(const int n, char *input[])
     parseInput(n, input);
 }
 
-PmergeMe::PmergeMe(const PmergeMe &other) : vec(other.vec), deq(other.deq), hasLeftover(other.hasLeftover), leftover(other.leftover)
+PmergeMe::PmergeMe(const PmergeMe &other) : vec(other.vec), deq(other.deq)
 {
 }
 
@@ -18,8 +18,6 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other)
     {
         vec = other.vec;
         deq = other.deq;
-        hasLeftover = other.hasLeftover;
-        leftover = other.leftover;
     }
     return (*this);
 }
@@ -42,6 +40,15 @@ void PmergeMe::sort()
         << vecTime << "  milliseconds" << std::endl;
     std::cout << "Time to process a range of " << vec.size() << " elements with std::deque : "
         << deqTime << "  milliseconds" << std::endl;
+}
+
+static bool    isPositiveInt(const std::string &elem)
+{
+    char *rest = 0;
+    long val = std::strtol(elem.c_str(), &rest, 10);
+    if (val < 0 || val > INT_MAX || *rest != '\0')
+        return (false);
+    return (true);
 }
 
 void PmergeMe::parseInput(const int n, char *input[])
