@@ -3,6 +3,8 @@
 
 # include <iostream>
 # include <sstream>
+# include <cstdlib>
+# include <climits>
 # include <string>
 # include <stack>
 
