@@ -2,6 +2,10 @@
 # define PMERGEME_HPP
 
 # include "mergeInsert.tpp"
+# include <iostream>
+# include <climits>
+# include <cstdlib>
+# include <fstream>
 # include <algorithm>
 # include <ctime>
 # include <deque>

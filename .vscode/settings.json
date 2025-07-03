@@ -78,6 +78,7 @@
 		"filesystem": "cpp",
 		"sstream": "cpp",
 		"complex": "cpp",
-		"*.tpp": "cpp"
+		"*.tpp": "cpp",
+		"t": "cpp"
 	}
 }

@@ -42,22 +42,14 @@ static void binaryInsertInt(T &mainChain, int &num)
     mainChain.insert(pos, num);
 }
 
-/*
-*/
 template <typename T>
 static void binaryInsert(T &mainChain, T &toInsert)
 {
     int  len = toInsert.size();
 
-    if (len <= 1)
-        return ;
     for (int i = 1; i < JACOBSTHAL_LENGTH; ++i)
     {
-        int startIndex;
-        if (JACOBSTHAL_SEQUENCE[i] >= len)
-            startIndex = len - 1;
-        else
-            startIndex = JACOBSTHAL_SEQUENCE[i] - 1;
+        int startIndex = std::min(JACOBSTHAL_SEQUENCE[i], len) - 1;
         int endIndex = JACOBSTHAL_SEQUENCE[i - 1] - 1;
         if (startIndex <= endIndex)
             break ;
@@ -72,37 +64,38 @@ void mergeInsert(T &intContainer)
     if (intContainer.size() <= 1)
         return ;
 
-    typename    T::iterator it   = intContainer.begin();
+    // split
     T a, b;
-
-    // split in pairs A and B
-    while (std::distance(it, intContainer.end()) >= 2)
+    for (size_t i = 0; i + 1 < intContainer.size(); i += 2)
     {
-        if (*it > *(it + 1))
+        if (intContainer[i] > intContainer[i + 1])
         {
-            a.push_back(*it);
-            b.push_back(*(it + 1));
+            a.push_back(intContainer[i]);
+            b.push_back(intContainer[i + 1]);
         }
         else
         {
-            a.push_back(*(it + 1));
-            b.push_back(*it);
+            a.push_back(intContainer[i + 1]);
+            b.push_back(intContainer[i]);
         }
-        it += 2;
     }
-    int hasRest = intContainer.size() % 2;
-    int rest = hasRest ? intContainer.back() : 0;
+    int hasLeftover = intContainer.size() % 2;
+    int leftover = hasLeftover ? intContainer.back() : 0;
+
     // recursion on A
-    T mainChain;
-    // mainChain.push_back(b[0]);
     mergeInsert(a);
-    mainChain.insert(mainChain.end(), a.begin(), a.end());
+    // start main chain with sorted A
+    T mainChain;
+    mainChain = a;
+
     // binary insertion from B to main chain
     if (b.size() >= 1)
         binaryInsert(mainChain, b);
+
     // insert leftover if n is odd
-    if (hasRest)
-        binaryInsertInt(mainChain, rest);
+    if (intContainer.size() > 1 && hasLeftover)
+        binaryInsertInt(mainChain, leftover);
+
     intContainer = mainChain;
 }
 
