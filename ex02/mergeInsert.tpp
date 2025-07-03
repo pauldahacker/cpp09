@@ -73,7 +73,7 @@ void mergeInsert(T &intContainer)
         return ;
 
     typename    T::iterator it   = intContainer.begin();
-    T a, b, mainChain;
+    T a, b;
 
     // split in pairs A and B
     while (std::distance(it, intContainer.end()) >= 2)
@@ -93,6 +93,7 @@ void mergeInsert(T &intContainer)
     int hasRest = intContainer.size() % 2;
     int rest = hasRest ? intContainer.back() : 0;
     // recursion on A
+    T mainChain;
     // mainChain.push_back(b[0]);
     mergeInsert(a);
     mainChain.insert(mainChain.end(), a.begin(), a.end());
